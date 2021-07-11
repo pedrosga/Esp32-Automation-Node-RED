@@ -196,7 +196,6 @@ void Task2code( void * pvParameters ){
   }
 }
 
-
 void loop() {
   if (!client.connected()) {
     reconnect();
@@ -207,13 +206,11 @@ void loop() {
   if (now - lastMsg > 5000) {
     lastMsg = now;
     
-
     char tempString[8];
     dtostrf(temperature, 1, 2, tempString);
     Serial.print("Temperature: ");
     Serial.println(tempString);
     client.publish("temperature", tempString);
-    
 
     char humString[8];
     dtostrf(humidity, 1, 2, humString);
