@@ -5,11 +5,11 @@
 TaskHandle_t Task1;
 TaskHandle_t Task2;
 
-// Replace the next variables with your SSID/Password combination
-const char* ssid = "REPLACE_WITH_YOUR_SSID";
-const char* password = "REPLACE_WITH_YOUR_PASSWORD";
+//Credenciais do Wi-FI
+const char* ssid = "SSID";
+const char* password = "SENHA";
 
-// Add your MQTT Broker IP address, example:
+// Adicione o seu endereço MQTT Broker, exemplo:
 //const char* mqtt_server = "192.168.1.144";
 const char* mqtt_server = "example.com";
 
@@ -22,18 +22,18 @@ int value = 0;
 float temperature = 0;
 float humidity = 0;
 
-// Digital pin connected to the DHT sensor
+//Pino conectado ao DHT
 #define DHTPIN 22  
 
-// Uncomment whatever DHT sensor type you're using
+// Defina o DHT utilizado
 #define DHTTYPE DHT11   // DHT 11
 //#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
 //#define DHTTYPE DHT21   // DHT 21 (AM2301)   
 
-// Initialize DHT sensor
+
 DHT dht(DHTPIN, DHTTYPE);
 
-// LED Pin
+
 const int ledPin1 = 2;
 const int ledPin2 = 4;
 const int ledPin3 = 16;
@@ -207,14 +207,14 @@ void loop() {
   if (now - lastMsg > 5000) {
     lastMsg = now;
     
-    // Convert the value to a char array
+
     char tempString[8];
     dtostrf(temperature, 1, 2, tempString);
     Serial.print("Temperature: ");
     Serial.println(tempString);
     client.publish("temperature", tempString);
     
-    // Convert the value to a char array
+
     char humString[8];
     dtostrf(humidity, 1, 2, humString);
     Serial.print("Humidity: ");
