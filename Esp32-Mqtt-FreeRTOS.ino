@@ -23,7 +23,7 @@ float temperature = 0;
 float humidity = 0;
 
 //Pino conectado ao DHT
-#define DHTPIN 22  
+#define DHTPIN 4  
 
 // Defina o DHT utilizado
 #define DHTTYPE DHT11   // DHT 11
@@ -35,7 +35,7 @@ DHT dht(DHTPIN, DHTTYPE);
 
 
 const int ledPin1 = 2;
-const int ledPin2 = 4;
+const int ledPin2 = 5;
 const int ledPin3 = 16;
 const int ledPin4 = 17;
 
@@ -48,9 +48,9 @@ void setup() {
                     "Task1",     /* name of task. */
                     10000,       /* Stack size of task */
                     NULL,        /* parameter of the task */
-                    5,           /* priority of the task */
+                    3,           /* priority of the task */
                     &Task1,      /* Task handle to keep track of created task */
-                    0);          /* pin task to core 0 */                  
+                    1);          /* pin task to core 0 */                  
 
   //create a task that will be executed in the Task2code() function, with priority 1 and executed on core 1
   xTaskCreatePinnedToCore(
@@ -58,7 +58,7 @@ void setup() {
                     "Task2",     /* name of task. */
                     10000,       /* Stack size of task */
                     NULL,        /* parameter of the task */
-                    5,           /* priority of the task */
+                    3,           /* priority of the task */
                     &Task2,      /* Task handle to keep track of created task */
                     1);          /* pin task to core 1 */
   
@@ -182,6 +182,7 @@ void Task1code( void * pvParameters ){
     Serial.println(xPortGetCoreID());
     while (1){
     delay(1);
+    temperature = dht.readTemperature();
    }
 }
 
@@ -191,7 +192,6 @@ void Task2code( void * pvParameters ){
 
   for(;;){
     delay(1);
-    temperature = dht.readTemperature();
     humidity = dht.readHumidity();
   }
 }
